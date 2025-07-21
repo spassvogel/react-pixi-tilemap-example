@@ -4,6 +4,7 @@ import { CompositeTilemap as PixiCompositeTilemap } from '@pixi/tilemap'
 import CompositeTilemap from "../pixi/CompositeTilemap"
 import { findTileset } from "./utils/tiles"
 import type { Texture } from "pixi.js"
+import normalizeGid from "./utils/normalizeGid"
 
 type Props = {
   mapData: TiledMapData
@@ -25,9 +26,8 @@ const TiledTileLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
       return
     }
 
-
     layerData.data.map((gid, i) => {
-      const actualGid = gid & 0x1FFFFFFF
+      const actualGid = normalizeGid(gid)
       const tileset = findTileset(actualGid, mapData.tilesets)
       if (!tileset || gid === 0) return null
 
@@ -35,12 +35,17 @@ const TiledTileLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
       const x = (i % columns) * mapData.tilewidth
       const y = Math.floor(i / columns) * mapData.tileheight
 
-      if (tilesetTextures[`${tileset.name}-${gid}`]) {
-        currentRef.tile(tilesetTextures[`${tileset.name}-${gid}`], x, y, {
+      if (tileset.name.startsWith('fire')) {
+        console.log(`(wouter left this in) ${tileset.name}-${gid}`, `${tileset.name}-${gid}`);
+        console.log(tilesetTextures[`${tileset.name}-${gid}`])
+      }
+      const tileId = gid - tileset.firstgid + 1
+      if (tilesetTextures[`${tileset.name}-${tileId}`]) {
+        currentRef.tile(tilesetTextures[`${tileset.name}-${tileId}`], x, y, {
           alpha: layerData.opacity
         })
       } else {
-        console.warn('Could not find ' + `${tileset.name}-${gid}`, tilesetTextures )
+        console.warn('Could not find ' + `${tileset.name}-${tileId}`, tilesetTextures )
       }
     })
   }, [layerData.data, layerData.opacity, mapData.tileheight, mapData.tilesets, mapData.tilewidth, mapData.width, tilesetTextures])

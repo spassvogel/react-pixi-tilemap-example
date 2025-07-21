@@ -35,7 +35,6 @@ const TiledTilemap = ({
       return null
     }
     return mapData.layers.map((l, i) => {
-      console.log(l)
       switch (l.type) {
         case 'tilelayer': {
           return (

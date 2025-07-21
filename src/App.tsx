@@ -23,7 +23,7 @@ function App() {
   // )
   return (
     <Application width={64 * 16} height={11 * 16}>
-      <PixiDevToolsConnector />
+      {import.meta.env.DEV && <PixiDevToolsConnector />}
       <TiledTilemap 
         basePath="./gothic/" 
         tilesetBasePath="./gothic/tilesets"

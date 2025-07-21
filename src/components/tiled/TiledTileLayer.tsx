@@ -13,17 +13,18 @@ type Props = {
 
 const TiledTileLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
   const ref = useRef<PixiCompositeTilemap>(null)
+  const layerData = mapData.layers[layerIndex]
+  if (layerData.type !== TiledLayerType.tilelayer) {
+    // This should never happen, but let's satisfy typescript
+    throw new Error(`ObjectGroupLayer should only receive layer of type ${TiledLayerType.tilelayer}`)
+  }
 
   useEffect(() => {
     const currentRef = ref.current
     if (!currentRef) {
       return
     }
-    const layerData = mapData.layers[layerIndex]
-    if (layerData.type !== TiledLayerType.tilelayer) {
-      // This should never happen, but let's satisfy typescript
-      return
-    }
+
 
     layerData.data.map((gid, i) => {
       const actualGid = gid & 0x1FFFFFFF
@@ -42,10 +43,10 @@ const TiledTileLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
         console.warn('Could not find ' + `${tileset.name}-${gid}`, tilesetTextures )
       }
     })
-  }, [layerIndex, mapData, tilesetTextures])
+  }, [layerData.data, layerData.opacity, mapData.tileheight, mapData.tilesets, mapData.tilewidth, mapData.width, tilesetTextures])
   
   return (
-    <CompositeTilemap ref={ref} />
+    <CompositeTilemap ref={ref} label={layerData.name}/>
   )
 }
 

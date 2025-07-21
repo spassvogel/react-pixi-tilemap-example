@@ -5,6 +5,7 @@ import { extend, useApplication } from "@pixi/react"
 import TiledTileLayer from "./TiledTileLayer"
 import useLoadMapData from "../../hooks/useLoadMapData"
 import TilingSprite from "../pixi/TilingSprite"
+import ObjectGroupLayer from "./ObjectGroupLayer"
 
 type Props = PropsWithChildren<{
   fileName: string
@@ -48,16 +49,29 @@ const TiledTilemap = ({
         }
         case 'imagelayer': {
           return (
+            // Todo: wrap in TiledImageLayer component
+            // that supports opacity, parallax etc
             <TilingSprite
               width={app.renderer.width}
               height={app.renderer.height}
               src={`${imageBasePath}${l.image}`}
               key={l.name}
+              label={l.name}
+            />
+          )
+        }
+        case 'objectgroup': {
+          return (
+            <ObjectGroupLayer 
+              layerIndex={i}
+              mapData={mapData}
+              key={l.name}
+              tilesetTextures={tilesetTextures} 
             />
           )
         }
         default:
-          console.warn(`Unknown layer type ${l}`)
+          console.warn(`Unknown layer type ${JSON.stringify(l)}`)
           return null
       }
     })
@@ -69,7 +83,7 @@ const TiledTilemap = ({
   }
 
   return (
-    <pixiContainer >
+    <pixiContainer label="TiledTilemap">
       {/* <Sprite src="village/backgrounds/mist-forest/mist-forest-background-previewx2.png" /> */}
       {layers}
       {children}

@@ -62,6 +62,18 @@ export type TiledLayerData = {
 
   type: typeof TiledLayerType.tilelayer
   data: number[]
+  height: number
+  opacity: number
+  width: number
+} | {
+  id: number
+  name: string
+  properties?: TiledProperty[]
+  x: number
+  y: number
+  visible?: boolean
+
+  type: typeof TiledLayerType.objectgroup
   objects: TiledObjectData[]
   height: number
   opacity: number

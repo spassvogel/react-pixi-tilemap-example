@@ -22,7 +22,9 @@ declare module "@pixi/react" {
 
 extend({ CustomCompositeTilemap })
 
-type Props = PropsWithChildren<CustomCompositeTilemapOptions>
+type Props = PropsWithChildren<CustomCompositeTilemapOptions & {
+  label?: string
+}> 
 
 const CompositeTilemap = forwardRef<PixiCompositeTilemap, Props>(({ children, ...restProps }, ref) => {
   return (

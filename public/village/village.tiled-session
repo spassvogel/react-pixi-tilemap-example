@@ -19,6 +19,10 @@
                 "y": 143.66666666666666
             }
         },
+        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire-red-anim-small.json": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire.json": {
             "scaleInDock": 1,
             "scaleInEditor": 1
@@ -77,6 +81,7 @@
     "project": "village.tiled-project",
     "recentFiles": [
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire.json",
+        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire-red-anim-small.json",
         "level1.json",
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/gothic-horror-tiles.json",
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/gothic-level1.json",

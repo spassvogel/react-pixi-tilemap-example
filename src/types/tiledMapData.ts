@@ -34,6 +34,12 @@ export type TiledTilesetExternalData = {
 export type TileData =  {
   id: number
   properties?: TiledProperty[]
+  animation?: TiledFrame[]
+}
+
+export type TiledFrame = {
+  duration: number
+  tileid: number
 }
 
 export type TiledLayerData = {

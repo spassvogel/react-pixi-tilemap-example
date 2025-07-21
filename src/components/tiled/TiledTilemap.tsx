@@ -78,7 +78,7 @@ const TiledTilemap = ({
       }
     })
     
-  }, [app.renderer.height, app.renderer.width, imageBasePath, mapData, tilesetTextures])
+  }, [app.renderer?.height, app.renderer?.width, imageBasePath, mapData, tilesetTextures])
 
   if (!tilesetTextures) {
     return null

@@ -17,7 +17,7 @@ const useLoadTilesets = (tilesetData: TiledTilesetData[], textureBasePath: strin
       const columns = tileset.columns
       const w = tileset.tilewidth
       const h = tileset.tileheight
-  console.log("LOADED", tileset.image)
+
       for (let i = 0; i < tileset.tilecount; i++) {
         const x = (i % columns) * w
         const y = Math.floor(i / columns) * h

@@ -3,7 +3,7 @@ const FLIPPED_VERTICALLY_FLAG   = 0x40000000
 const FLIPPED_DIAGONALLY_FLAG   = 0x20000000
 
 // todo: check this, its not working well!
-const tiledFlagsToPixiRotate = (gid: number) => {
+const determineTilemapTileRotation = (gid: number) => {
   const h = (gid & FLIPPED_HORIZONTALLY_FLAG) !== 0
   const v = (gid & FLIPPED_VERTICALLY_FLAG) !== 0
   const d = (gid & FLIPPED_DIAGONALLY_FLAG) !== 0
@@ -23,5 +23,5 @@ const tiledFlagsToPixiRotate = (gid: number) => {
   return 0
 }
 
-export default tiledFlagsToPixiRotate
+export default determineTilemapTileRotation
 

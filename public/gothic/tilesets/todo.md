@@ -1,0 +1,1 @@
+we can extract medium (32x32) and large fire (32x48) and make tilesets for it!

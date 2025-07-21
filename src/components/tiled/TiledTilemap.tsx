@@ -1,0 +1,78 @@
+import { Container } from "pixi.js"
+import { useMemo, type PropsWithChildren } from "react"
+import useLoadTilesets from "../../hooks/useLoadTilesets"
+import { extend, useApplication } from "@pixi/react"
+import TiledTileLayer from "./TiledTileLayer"
+import useLoadMapData from "../../hooks/useLoadMapData"
+import TilingSprite from "../pixi/TilingSprite"
+
+type Props = PropsWithChildren<{
+  fileName: string
+  basePath?: string
+  tilesetBasePath?: string
+  imageBasePath?: string
+}>
+
+extend({
+  Container,
+})
+
+
+const TiledTilemap = ({ 
+  fileName,
+  basePath = "./",
+  tilesetBasePath = "./",
+  imageBasePath = "./",
+  children 
+}: Props) => {
+  const mapData = useLoadMapData(basePath, fileName)
+  const tilesetTextures = useLoadTilesets(mapData?.tilesets ?? [], tilesetBasePath)
+  const { app } = useApplication()
+
+  const layers = useMemo(() => {
+    if (!mapData || !tilesetTextures) {
+      return null
+    }
+    return mapData.layers.map((l, i) => {
+      switch (l.type) {
+        case 'tilelayer': {
+          return (
+            <TiledTileLayer 
+              layerIndex={i}
+              mapData={mapData} 
+              key={l.name}
+              tilesetTextures={tilesetTextures} 
+            />
+          )
+        }
+        case 'imagelayer': {
+          return (
+            <TilingSprite
+              width={app.renderer.width}
+              height={app.renderer.height}
+              src={`${imageBasePath}${l.image}`}
+              key={l.name}
+            />
+          )
+        }
+        default:
+          return null
+      }
+    })
+    
+  }, [app.renderer.height, app.renderer.width, imageBasePath, mapData, tilesetTextures])
+
+  if (!tilesetTextures) {
+    return null
+  }
+
+  return (
+    <pixiContainer >
+      {/* <Sprite src="village/backgrounds/mist-forest/mist-forest-background-previewx2.png" /> */}
+      {layers}
+      {children}
+    </pixiContainer>
+  )
+}
+
+export default TiledTilemap

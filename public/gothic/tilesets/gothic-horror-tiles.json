@@ -1,0 +1,14 @@
+{ "columns":44,
+ "image":"gothic-horror-tiles.png",
+ "imageheight":176,
+ "imagewidth":704,
+ "margin":0,
+ "name":"gothic-horror-tiles",
+ "spacing":0,
+ "tilecount":484,
+ "tiledversion":"1.11.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

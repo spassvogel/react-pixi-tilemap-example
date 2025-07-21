@@ -1,0 +1,93 @@
+import { type PropsWithChildren } from "react"
+import { Container, Graphics, Sprite, Text } from "pixi.js"
+import { type IClampOptions, 
+  type IClampZoomOptions, 
+  type IDecelerateOptions, 
+  type IDragOptions, 
+  type IPinchOptions, 
+  type IViewportOptions, 
+  type IWheelOptions, 
+  Viewport as PixiViewport 
+} from "pixi-viewport"
+import { extend, useApplication, type PixiReactElementProps } from "@pixi/react"
+
+type CustomViewportOptions = IViewportOptions & {
+  decelerate?: true | IDecelerateOptions
+  drag?: true | IDragOptions
+  pinch?: true | IPinchOptions
+  wheel?: true | IWheelOptions
+  clamp?: true | IClampOptions
+  clampZoom?: IClampZoomOptions
+}
+
+class CustomViewport extends PixiViewport {
+  constructor(options: CustomViewportOptions) {
+    const { decelerate, drag, pinch, wheel, clamp, clampZoom, ...rest } = options
+    super(rest)
+
+    // Can either pass `true` for these or specific props to control behaviour
+    if (decelerate) {
+      if (typeof decelerate === 'boolean') {
+        this.decelerate()
+      } else {
+        this.decelerate(decelerate)
+      }
+    }
+    if (drag) {
+      if (typeof drag === 'boolean') {
+        this.drag()
+      } else {
+        this.drag(drag)
+      }
+    }
+    if (pinch) {
+      if (typeof pinch === 'boolean') {
+        this.pinch()
+      } else {
+        this.pinch(pinch)
+      }
+    }
+    if (wheel) {
+      if (typeof wheel === 'boolean') {
+        this.wheel()
+      } else {
+        this.wheel(wheel)
+      }
+    }
+    if (clamp) {
+      if (typeof clamp === 'boolean') {
+        this.clamp()
+      } else {
+        this.clamp(clamp)
+      }
+    }
+    if (clampZoom) {
+      this.clampZoom(clampZoom)
+    }
+  }
+}
+
+declare module "@pixi/react" {
+  interface PixiElements {
+    pixiCustomViewport: PixiReactElementProps<typeof CustomViewport>
+  }
+}
+
+extend({ Container, Graphics, Sprite, Text, CustomViewport })
+
+type Props = PropsWithChildren<Omit<CustomViewportOptions, 'events'>>
+
+function Viewport({ children, ...restProps }: Props ) {
+  const { app } = useApplication()
+
+  if (app.renderer) {
+    return (
+      <pixiCustomViewport {...restProps} events={app.renderer.events} >
+        {children}
+      </pixiCustomViewport>
+    )
+  }
+  return null
+}
+
+export default Viewport

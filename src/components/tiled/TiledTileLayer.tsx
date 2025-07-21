@@ -24,7 +24,7 @@ const TiledTileLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
       // This should never happen, but let's satisfy typescript
       return
     }
-    
+
     layerData.data.map((gid, i) => {
       const actualGid = gid & 0x1FFFFFFF
       const tileset = findTileset(actualGid, mapData.tilesets)
@@ -35,7 +35,9 @@ const TiledTileLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
       const y = Math.floor(i / columns) * mapData.tileheight
 
       if (tilesetTextures[`${tileset.name}-${gid}`]) {
-        currentRef.tile(tilesetTextures[`${tileset.name}-${gid}`], x, y)
+        currentRef.tile(tilesetTextures[`${tileset.name}-${gid}`], x, y, {
+          alpha: layerData.opacity
+        })
       } else {
         console.warn('Could not find ' + `${tileset.name}-${gid}`, tilesetTextures )
       }

@@ -64,7 +64,7 @@ export type TiledLayerData = {
   data: number[]
   objects: TiledObjectData[]
   height: number
-  opacity: number // not supported atm
+  opacity: number
   width: number
 }
 

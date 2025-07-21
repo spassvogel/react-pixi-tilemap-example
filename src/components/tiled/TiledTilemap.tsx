@@ -34,12 +34,13 @@ const TiledTilemap = ({
       return null
     }
     return mapData.layers.map((l, i) => {
+      console.log(l)
       switch (l.type) {
         case 'tilelayer': {
           return (
             <TiledTileLayer 
               layerIndex={i}
-              mapData={mapData} 
+              mapData={mapData}
               key={l.name}
               tilesetTextures={tilesetTextures} 
             />
@@ -56,6 +57,7 @@ const TiledTilemap = ({
           )
         }
         default:
+          console.warn(`Unknown layer type ${l}`)
           return null
       }
     })

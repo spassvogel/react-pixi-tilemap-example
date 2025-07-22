@@ -68,6 +68,7 @@ export type TiledLayerData = {
   visible?: boolean
 
   encoding?: 'base64'
+  compression?: 'gzip'
   data: number[]
   height: number
   opacity: number

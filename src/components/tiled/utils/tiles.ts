@@ -1,5 +1,6 @@
 import { TiledLayerType, type TiledLayerData, type TiledTilesetData } from "../../../types/tiledMapData"
 import { Buffer } from 'buffer'
+import pako from 'pako'
 
 // finds tileset based on gid
 export const findTileset = (gid: number, tilesets: TiledTilesetData[]) => {
@@ -23,7 +24,13 @@ export const getTileData = (layerData: Extract<TiledLayerData, { type: typeof Ti
 
   // If applicable, decode Base64
   if(layerData.encoding === 'base64') {
-    const decoded = Buffer.from(layerData.data, 'base64')
+    let decoded = Buffer.from(layerData.data, 'base64')
+
+    // If applicable, extract gzip compressed data
+    if(layerData.compression === 'gzip') {
+      decoded = Buffer.from(pako.ungzip(decoded))
+    }
+
     const array = []
     // Read buffer data every 4 bytes ==
     for(let i = 0; i < decoded.length; i += 4) {
@@ -32,24 +39,5 @@ export const getTileData = (layerData: Extract<TiledLayerData, { type: typeof Ti
     return array
   }
 
-  // ============================================
-  // == If applicable, extract compressed data ==
-  // ============================================
-  // if(layer.compression === 'gzip') {
-    //    data = zlib.gunzipSync(data);
-  // }
-
-  // ====================================
-  // == Read buffer data every 4 bytes ==
-  // ====================================
-
-  // Each 32-bit integer is placed in an 8-bit integer array.
-  // There will never be a tile ID greater than 255, so only 1 byte is required.
-  // let array = new Uint8Array(layer.width * layer.height);
-  // for(let i=0, index=0; i<data.length; i += 4, index++) {
-  //     array[index] = data.readUInt32LE(i);
-  //     index++;
-  // }
-  // return array;
   return []
 }

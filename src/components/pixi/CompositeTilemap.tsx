@@ -1,4 +1,3 @@
-import { type PropsWithChildren } from "react"
 import { TextureSource } from "pixi.js"
 import { extend, type PixiReactElementProps } from "@pixi/react"
 import { CompositeTilemap as PixiCompositeTilemap } from '@pixi/tilemap'
@@ -22,15 +21,13 @@ declare module "@pixi/react" {
 
 extend({ CustomCompositeTilemap })
 
-type Props = PropsWithChildren<CustomCompositeTilemapOptions & {
+type Props = CustomCompositeTilemapOptions & {
   label?: string
-}> 
+}
 
-const CompositeTilemap = forwardRef<PixiCompositeTilemap, Props>(({ children, ...restProps }, ref) => {
+const CompositeTilemap = forwardRef<PixiCompositeTilemap, Props>(({ ...restProps }, ref) => {
   return (
-    <pixiCustomCompositeTilemap {...restProps} ref={ref}>
-      {children}
-    </pixiCustomCompositeTilemap>
+    <pixiCustomCompositeTilemap {...restProps} ref={ref} />
   )
 })
 

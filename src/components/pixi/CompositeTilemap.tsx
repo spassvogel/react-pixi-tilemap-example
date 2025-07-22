@@ -1,4 +1,4 @@
-import { TextureSource } from "pixi.js"
+import { type TextureSource } from "pixi.js"
 import { extend, type PixiReactElementProps } from "@pixi/react"
 import { CompositeTilemap as PixiCompositeTilemap } from '@pixi/tilemap'
 import { forwardRef } from "react"

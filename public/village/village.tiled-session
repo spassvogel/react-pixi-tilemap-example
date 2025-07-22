@@ -12,11 +12,14 @@
             "scaleInDock": 1
         },
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/gothic-level1.json": {
-            "scale": 3,
-            "selectedLayer": 4,
+            "expandedObjectLayers": [
+                8
+            ],
+            "scale": 1.5,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 595.6666666666666,
-                "y": 143.66666666666666
+                "x": 553.3333333333333,
+                "y": 264.3333333333333
             }
         },
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire-red-anim-small.json": {
@@ -28,7 +31,7 @@
             "scaleInEditor": 1
         },
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/gothic-horror-tiles.json": {
-            "scaleInDock": 3,
+            "scaleInDock": 1,
             "scaleInEditor": 1
         },
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/tiles.json": {
@@ -51,8 +54,8 @@
             "scale": 0.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 258,
-                "y": 668
+                "x": -14,
+                "y": 683
             }
         },
         "props.tsx": {
@@ -60,7 +63,7 @@
             "scaleInEditor": 1
         },
         "tilesets/ground.tsj": {
-            "scaleInDock": 1
+            "scaleInDock": 3
         },
         "tilesets/ground.tsx": {
             "scaleInDock": 1,
@@ -80,11 +83,11 @@
     ],
     "project": "village.tiled-project",
     "recentFiles": [
-        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire.json",
-        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire-red-anim-small.json",
+        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/gothic-level1.json",
         "level1.json",
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/gothic-horror-tiles.json",
-        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/gothic-level1.json",
+        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire-red-anim-small.json",
+        "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/fire.json",
         "/Users/wouter/SynologyDrive/Projects/hobby/pixi-js/repositories/forest-walker/public/gothic/tilesets/tiles.json",
         "tilesets/ground.tsx",
         "props.tsx"

@@ -1,17 +1,25 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { TiledLayerType, type TiledMapData } from "../../types/tiledMapData"
 import { CompositeTilemap as PixiCompositeTilemap } from '@pixi/tilemap'
 import CompositeTilemap from "../pixi/CompositeTilemap"
 import { findTileset } from "./utils/tiles"
 import type { Texture } from "pixi.js"
+import { determineTilemapAnimationOptions, determineTilemapTileRotation } from "./utils/tilemap"
+import normalizeGid from "./utils/normalizeGid"
 
 type Props = {
   mapData: TiledMapData
   tilesetTextures: { [name: string]: Texture } 
   layerIndex: number
+  animationInterval?: number
 }
 
-const ObjectGroupLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
+const ObjectGroupLayer = ({ 
+  layerIndex, 
+  tilesetTextures, 
+  mapData,
+  animationInterval = 100  
+ }: Props) => {
   const ref = useRef<PixiCompositeTilemap>(null)
   const layerData = mapData.layers[layerIndex]
   if (layerData.type !== TiledLayerType.objectgroup) {
@@ -19,35 +27,85 @@ const ObjectGroupLayer = ({ layerIndex, tilesetTextures, mapData }: Props) => {
     throw new Error(`ObjectGroupLayer should only receive layer of type ${TiledLayerType.objectgroup}`)
   }
 
+  const [hasAnimation, setHasAnimation] = useState(false)
+
   useEffect(() => {
     const currentRef = ref.current
     if (!currentRef) {
       return
     }
 
-console.log(layerData.objects)
-const gid = 485
-      const actualGid = gid & 0x1FFFFFFF
+    let foundAnimation = false
+    const data = layerData.objects
+    data.map((object) => {
+      const { gid, visible, x } = object
+      if (!visible) {
+        return null
+      }
+
+      const actualGid = normalizeGid(gid)
       const tileset = findTileset(actualGid, mapData.tilesets)
-      console.log(tileset)
-    // layerData.data.map((gid, i) => {
-    //   const actualGid = gid & 0x1FFFFFFF
-    //   const tileset = findTileset(actualGid, mapData.tilesets)
-    //   if (!tileset || gid === 0) return null
+      if (!tileset || gid === 0) return null
 
-    //   const columns = mapData.width
-    //   const x = (i % columns) * mapData.tilewidth
-    //   const y = Math.floor(i / columns) * mapData.tileheight
+      let { y } = object
 
-    //   if (tilesetTextures[`${tileset.name}-${gid}`]) {
-    //     currentRef.tile(tilesetTextures[`${tileset.name}-${gid}`], x, y, {
-    //       alpha: layerData.opacity
-    //     })
-    //   } else {
-    //     console.warn('Could not find ' + `${tileset.name}-${gid}`, tilesetTextures )
-    //   }
-    // })
-  }, [layerData.objects, layerData.type, mapData.tilesets])
+      // "tile objects have bottom-left corner origin"
+      // https://github.com/mapeditor/tiled/issues/1710#issuecomment-325672568
+      y += -object.height
+
+      // Get the tileid local to the tileset
+      const tileId = actualGid - tileset.firstgid + 1
+
+      if (tilesetTextures[`${tileset.name}-${tileId}`]) {
+        const alpha = layerData.opacity
+        const rotate = determineTilemapTileRotation(gid)
+        const animOptions = determineTilemapAnimationOptions(tileId, tileset, animationInterval)
+        
+        if (animOptions) {
+          foundAnimation = true
+        }
+
+        currentRef.tile(tilesetTextures[`${tileset.name}-${tileId}`], x, y, {
+          alpha,
+          rotate,
+          ...animOptions
+        })
+      } else {
+        console.warn('Could not find ' + `${tileset.name}-${tileId}`, tilesetTextures )
+      }
+    })
+
+    setHasAnimation(foundAnimation)
+  }, [
+    animationInterval, 
+    layerData, 
+    mapData,
+    tilesetTextures
+  ])
+  
+  useEffect(() => {
+    const currentRef = ref.current
+    if (!currentRef) {
+      return
+    }
+    let interval: ReturnType<typeof setInterval> = -1
+   
+    if (!hasAnimation) {
+      clearInterval(interval)
+    }
+
+    let frame = 0
+    const update = () => {
+      // animate X and Y frames
+      currentRef.tileAnim = [frame, frame]
+      frame++
+    }
+
+    interval = setInterval(update, animationInterval)
+    return () => {
+      clearInterval(interval)
+    }
+  }, [animationInterval, hasAnimation])
   
   return (
     <CompositeTilemap ref={ref} label={layerData.name} />

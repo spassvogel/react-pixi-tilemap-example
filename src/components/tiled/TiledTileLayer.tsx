@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from "react"
 import { TiledLayerType, type TiledMapData } from "../../types/tiledMapData"
 import { CompositeTilemap as PixiCompositeTilemap } from '@pixi/tilemap'
 import CompositeTilemap from "../pixi/CompositeTilemap"
-import { findTileset } from "./utils/tiles"
+import { findTileset, getTileData } from "./utils/tiles"
 import { type Texture } from "pixi.js"
 import normalizeGid from "./utils/normalizeGid"
-import determineTilemapTileRotation from "./utils/determineTilemapTileRotation"
-import determineTilemapAnimationOptions from "./utils/determineTilemapAnimationOptions"
+import { determineTilemapAnimationOptions, determineTilemapTileRotation } from "./utils/tilemap"
 
 type Props = {
   mapData: TiledMapData
@@ -38,7 +37,8 @@ const TiledTileLayer = ({
     }
 
     let foundAnimation = false
-    layerData.data.map((gid, i) => {
+    const data = getTileData(layerData)
+    data.map((gid, i) => {
       const actualGid = normalizeGid(gid)
       const tileset = findTileset(actualGid, mapData.tilesets)
       if (!tileset || gid === 0) return null
@@ -47,7 +47,7 @@ const TiledTileLayer = ({
       let x = (i % columns) * mapData.tilewidth
       let y = Math.floor(i / columns) * mapData.tileheight
       
-      // If the tileset has a different size than the actual map, offset the location
+      // If the tileset has a different size than the actual map tiles, offset the location
       x += mapData.tilewidth - tileset.tilewidth
       y += mapData.tileheight - tileset.tileheight
       
@@ -76,8 +76,7 @@ const TiledTileLayer = ({
     setHasAnimation(foundAnimation)
   }, [
     animationInterval, 
-    layerData.data, 
-    layerData.opacity, 
+    layerData, 
     mapData,
     tilesetTextures
   ])

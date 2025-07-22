@@ -25,9 +25,9 @@ type Props = CustomCompositeTilemapOptions & {
   label?: string
 }
 
-const CompositeTilemap = forwardRef<PixiCompositeTilemap, Props>(({ ...restProps }, ref) => {
+const CompositeTilemap = forwardRef<PixiCompositeTilemap, Props>((props, ref) => {
   return (
-    <pixiCustomCompositeTilemap {...restProps} ref={ref} />
+    <pixiCustomCompositeTilemap {...props} ref={ref} />
   )
 })
 

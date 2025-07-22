@@ -12,6 +12,7 @@ type Props = PropsWithChildren<{
   basePath?: string
   tilesetBasePath?: string
   imageBasePath?: string
+  width?: number
 }>
 
 extend({
@@ -24,7 +25,8 @@ const TiledTilemap = ({
   basePath = "./",
   tilesetBasePath = "./",
   imageBasePath = "./",
-  children 
+  width,
+  children
 }: Props) => {
   const mapData = useLoadMapData(basePath, fileName)
   const tilesetTextures = useLoadTilesets(mapData?.tilesets ?? [], tilesetBasePath)
@@ -54,7 +56,7 @@ const TiledTilemap = ({
             // Todo: wrap in TiledImageLayer component
             // that supports opacity, parallax etc
             <TilingSprite
-              width={app.renderer.width}
+              width={width}
               height={app.renderer.height}
               src={`${imageBasePath}${l.image}`}
               key={l.name}

@@ -1,4 +1,4 @@
-import { type PropsWithChildren } from "react"
+import { forwardRef, type PropsWithChildren } from "react"
 import { Container, Graphics, Sprite, Text } from "pixi.js"
 import { type IClampOptions, 
   type IClampZoomOptions, 
@@ -22,7 +22,7 @@ type CustomViewportOptions = IViewportOptions & {
 
 class CustomViewport extends PixiViewport {
   constructor(options: CustomViewportOptions) {
-    const { decelerate, drag, pinch, wheel, clamp, clampZoom, ...rest } = options
+    const { decelerate, drag, pinch, wheel, clamp, clampZoom, ...rest } = options ?? {}
     super(rest)
 
     // Can either pass `true` for these or specific props to control behaviour
@@ -77,17 +77,14 @@ extend({ Container, Graphics, Sprite, Text, CustomViewport })
 
 type Props = PropsWithChildren<Omit<CustomViewportOptions, 'events'>>
 
-function Viewport({ children, ...restProps }: Props ) {
+const Viewport = forwardRef<PixiViewport, Props>(({ children, ...restProps }, ref) => {
   const { app } = useApplication()
 
-  if (app.renderer) {
-    return (
-      <pixiCustomViewport {...restProps} events={app.renderer.events} >
-        {children}
-      </pixiCustomViewport>
-    )
-  }
-  return null
-}
+  return (
+    <pixiCustomViewport {...restProps} events={app.renderer?.events} ref={ref}>
+      {children}
+    </pixiCustomViewport>
+  )
+})
 
 export default Viewport

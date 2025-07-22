@@ -1,12 +1,19 @@
 import { Application, extend } from '@pixi/react'
-import './App.css'
 import PixiDevToolsConnector from './components/pixi/PixiDevToolsConnector'
 import { Graphics } from 'pixi.js'
 import TiledTilemap from './components/tiled/TiledTilemap'
+import PlatformerViewport from './components/app/PlatformerViewport'
+
+import './App.css'
 
 extend({
   Graphics,
 })
+
+const worldWidth = 64 * 16
+const worldHeight = 11 * 16
+const viewportWidth = 16 * 16
+const viewportHeight = 11 * 16
 
 
 function App() {
@@ -21,15 +28,25 @@ function App() {
   //     />
   //   </Application>
   // )
+
+
   return (
-    <Application width={64 * 16} height={11 * 16}>
+    <Application width={viewportWidth} height={viewportHeight}>
       {import.meta.env.DEV && <PixiDevToolsConnector />}
-      <TiledTilemap 
-        basePath="./gothic/" 
-        tilesetBasePath="./gothic/tilesets"
-        imageBasePath="./gothic/"
-        fileName='gothic-level1.json' 
-      />
+      <PlatformerViewport
+        worldWidth={worldWidth} 
+        worldHeight={worldHeight}
+        screenWidth={viewportWidth}
+        screenHeight={viewportHeight}
+      >
+        <TiledTilemap
+          width={worldWidth}
+          basePath="./gothic/" 
+          tilesetBasePath="./gothic/tilesets"
+          imageBasePath="./gothic/"
+          fileName='gothic-level1.json' 
+        />
+      </PlatformerViewport>
     </Application>
   )
 }

@@ -1,5 +1,5 @@
 import { TiledLayerType, type TiledLayerData, type TiledTilesetData } from "../../../types/tiledMapData"
-
+import { Buffer } from 'buffer'
 
 // finds tileset based on gid
 export const findTileset = (gid: number, tilesets: TiledTilesetData[]) => {
@@ -16,18 +16,21 @@ export const findTileset = (gid: number, tilesets: TiledTilesetData[]) => {
 
 export const getTileData = (layerData: Extract<TiledLayerData, { type: typeof TiledLayerType.tilelayer }>): number[] => {
   if (typeof(layerData.data) !== 'string') {
-    // return new Uint8Array(layer.data);
     return layerData.data
   }
 
-  // todo: decode!
-  // ==================================
-  // == If applicable, decode Base64 ==
-  // ==================================
-  // if(layer.encoding === 'base64') {
-    // data = base64.decode(rawData);
-    // data = base64.decode("dGVzdA==");
-  // }
+  // Decoding adapted from: https://stackoverflow.com/a/55876907
+
+  // If applicable, decode Base64
+  if(layerData.encoding === 'base64') {
+    const decoded = Buffer.from(layerData.data, 'base64')
+    const array = []
+    // Read buffer data every 4 bytes ==
+    for(let i = 0; i < decoded.length; i += 4) {
+      array.push(decoded.readUInt32LE(i))
+    }
+    return array
+  }
 
   // ============================================
   // == If applicable, extract compressed data ==

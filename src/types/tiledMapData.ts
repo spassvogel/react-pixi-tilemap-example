@@ -59,6 +59,7 @@ export type TiledLayerData = {
   repeatx?: boolean
   repeaty?: boolean
 } | {
+  type: typeof TiledLayerType.tilelayer
   id: number
   name: string
   properties?: TiledProperty[]
@@ -66,7 +67,7 @@ export type TiledLayerData = {
   y: number
   visible?: boolean
 
-  type: typeof TiledLayerType.tilelayer
+  encoding?: 'base64'
   data: number[]
   height: number
   opacity: number

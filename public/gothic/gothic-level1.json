@@ -28,6 +28,7 @@
          "offsetx":16,
          "offsety":0,
          "opacity":1,
+         "parallaxx":1.15,
          "repeatx":true,
          "type":"imagelayer",
          "visible":true,

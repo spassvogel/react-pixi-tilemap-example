@@ -1,8 +1,8 @@
 import { useEffect, useRef, type PropsWithChildren } from "react"
 import Viewport from "../pixi/Viewport"
 import { type Viewport as PixiViewport } from "pixi-viewport"
-import { useApplication } from "@pixi/react"
 import type { MovedEvent } from "pixi-viewport/dist/types"
+import useLevelContext from "../../hooks/useLevelContext"
 
 type Props = PropsWithChildren<{
   worldWidth: number 
@@ -18,15 +18,15 @@ const PlatformerViewport = ({
   screenHeight,
   children
 }: Props) => {
-    // const { app } = useApplication()
 
   const viewportRef = useRef<PixiViewport>(null)
+  const { setCameraX } = useLevelContext()
+
   useEffect(() => {
     const viewportCurrent = viewportRef.current
     const onMoved = (e: MovedEvent) => {
       const moved = Math.abs(e.viewport.x)
-      console.log(`(wouter left this in) moved`, moved);
-      // paralallax: https://www.youtube.com/watch?v=vaGqPL8fE1U
+      setCameraX(moved)
     }
     if (viewportCurrent) {
       viewportCurrent.on('moved', onMoved)
@@ -34,7 +34,7 @@ const PlatformerViewport = ({
     return () => {
       viewportCurrent?.off('moved', onMoved)
     }
-  }, [])
+  }, [setCameraX])
   
   return (
     <Viewport 

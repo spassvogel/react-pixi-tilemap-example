@@ -4,8 +4,8 @@ import useLoadTilesets from "../../hooks/useLoadTilesets"
 import { extend, useApplication } from "@pixi/react"
 import TiledTileLayer from "./TiledTileLayer"
 import useLoadMapData from "../../hooks/useLoadMapData"
-import TilingSprite from "../pixi/TilingSprite"
 import ObjectGroupLayer from "./ObjectGroupLayer"
+import BackgroundImageLayer from "../app/BackgroundImageLayer"
 
 type Props = PropsWithChildren<{
   fileName: string
@@ -16,7 +16,7 @@ type Props = PropsWithChildren<{
 }>
 
 extend({
-  Container,
+  Container, Text
 })
 
 
@@ -30,7 +30,6 @@ const TiledTilemap = ({
 }: Props) => {
   const mapData = useLoadMapData(basePath, fileName)
   const tilesetTextures = useLoadTilesets(mapData?.tilesets ?? [], tilesetBasePath)
-  const { app } = useApplication()
 
   const layers = useMemo(() => {
     if (!mapData || !tilesetTextures) {
@@ -53,15 +52,12 @@ const TiledTilemap = ({
         }
         case 'imagelayer': {
           return (
-            // Todo: wrap in TiledImageLayer component
-            // that supports opacity, parallax etc
-            <TilingSprite
+            <BackgroundImageLayer
+              imageBasePath={imageBasePath}
               width={width}
-              height={app.renderer.height}
-              src={`${imageBasePath}${l.image}`}
               key={l.name}
-              label={l.name}
-            />
+              layerData={l}
+            />            
           )
         }
         case 'objectgroup': {
@@ -80,7 +76,7 @@ const TiledTilemap = ({
       }
     })
     
-  }, [app.renderer?.height, app.renderer?.width, imageBasePath, mapData, tilesetTextures])
+  }, [imageBasePath, mapData, tilesetTextures, width])
 
   if (!tilesetTextures) {
     return null
@@ -88,6 +84,7 @@ const TiledTilemap = ({
 
   return (
     <pixiContainer label="TiledTilemap">
+
       {/* <Sprite src="village/backgrounds/mist-forest/mist-forest-background-previewx2.png" /> */}
       {layers}
       {children}

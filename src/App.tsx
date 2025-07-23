@@ -5,6 +5,7 @@ import TiledTilemap from './components/tiled/TiledTilemap'
 import PlatformerViewport from './components/app/PlatformerViewport'
 
 import './App.css'
+import { LevelContextProvider } from './components/providers/LevelContextProvider'
 
 extend({
   Graphics,
@@ -33,20 +34,22 @@ function App() {
   return (
     <Application width={viewportWidth} height={viewportHeight}>
       {import.meta.env.DEV && <PixiDevToolsConnector />}
-      <PlatformerViewport
-        worldWidth={worldWidth} 
-        worldHeight={worldHeight}
-        screenWidth={viewportWidth}
-        screenHeight={viewportHeight}
-      >
-        <TiledTilemap
-          width={worldWidth}
-          basePath="./gothic/" 
-          tilesetBasePath="./gothic/tilesets"
-          imageBasePath="./gothic/"
-          fileName='gothic-level1.json' 
-        />
-      </PlatformerViewport>
+      <LevelContextProvider>
+        <PlatformerViewport
+          worldWidth={worldWidth} 
+          worldHeight={worldHeight}
+          screenWidth={viewportWidth}
+          screenHeight={viewportHeight}
+        >
+          <TiledTilemap
+            width={worldWidth}
+            basePath="./gothic/" 
+            tilesetBasePath="./gothic/tilesets"
+            imageBasePath="./gothic/"
+            fileName='gothic-level1.json' 
+          />
+        </PlatformerViewport>
+      </LevelContextProvider>
     </Application>
   )
 }

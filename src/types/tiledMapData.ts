@@ -50,6 +50,7 @@ export type TiledLayerData = {
   x: number
   y: number
   visible?: boolean
+  opacity: number
 
   image: string
   imagewidth: number
@@ -58,6 +59,8 @@ export type TiledLayerData = {
   offsety?: number
   repeatx?: boolean
   repeaty?: boolean
+  parallaxx?: number
+  parallaxy?: number
 } | {
   type: typeof TiledLayerType.tilelayer
   id: number
@@ -66,12 +69,12 @@ export type TiledLayerData = {
   x: number
   y: number
   visible?: boolean
+  opacity: number
 
   encoding?: 'base64'
   compression?: 'gzip'
   data: number[]
   height: number
-  opacity: number
   width: number
 } | {
   id: number
@@ -80,11 +83,11 @@ export type TiledLayerData = {
   x: number
   y: number
   visible?: boolean
+  opacity: number
 
   type: typeof TiledLayerType.objectgroup
   objects: TiledObjectData[]
   height: number
-  opacity: number
   width: number
 }
 

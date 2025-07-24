@@ -9,7 +9,7 @@ import { type IClampOptions,
   type IWheelOptions, 
   Viewport as PixiViewport 
 } from "pixi-viewport"
-import { extend, useApplication, type PixiReactElementProps } from "@pixi/react"
+import { extend, useApplication, type PixiElements, type PixiReactElementProps } from "@pixi/react"
 
 type CustomViewportOptions = IViewportOptions & {
   decelerate?: true | IDecelerateOptions
@@ -75,7 +75,7 @@ declare module "@pixi/react" {
 
 extend({ Container, Graphics, Sprite, Text, CustomViewport })
 
-type Props = PropsWithChildren<Omit<CustomViewportOptions, 'events'>>
+type Props = PropsWithChildren<Omit<CustomViewportOptions & PixiElements['pixiContainer'], 'events'>>
 
 const Viewport = forwardRef<PixiViewport, Props>(({ children, ...restProps }, ref) => {
   const { app } = useApplication()

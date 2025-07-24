@@ -43,9 +43,9 @@ function App() {
         >
           <TiledTilemap
             width={worldWidth}
-            basePath="./gothic/" 
-            tilesetBasePath="./gothic/tilesets"
-            imageBasePath="./gothic/"
+            basePath="/environment/gothic/" 
+            tilesetBasePath="/environment/gothic/tilesets"
+            imageBasePath="/environment/gothic/"
             fileName='gothic-level1.json' 
           />
         </PlatformerViewport>

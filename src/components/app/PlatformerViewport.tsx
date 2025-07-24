@@ -1,4 +1,4 @@
-import { useEffect, useRef, type PropsWithChildren } from "react"
+import { useEffect, useRef, type ComponentProps, type PropsWithChildren } from "react"
 import Viewport from "../pixi/Viewport"
 import { type Viewport as PixiViewport } from "pixi-viewport"
 import type { MovedEvent } from "pixi-viewport/dist/types"
@@ -9,15 +9,9 @@ type Props = PropsWithChildren<{
   worldHeight: number
   screenWidth: number
   screenHeight: number
-}>
+}> & ComponentProps<typeof Viewport>
 
-const PlatformerViewport = ({ 
-  worldWidth, 
-  worldHeight,
-  screenWidth,
-  screenHeight,
-  children
-}: Props) => {
+const PlatformerViewport = (props: Props) => {
 
   const viewportRef = useRef<PixiViewport>(null)
   const { setCameraX } = useLevelContext()
@@ -37,11 +31,8 @@ const PlatformerViewport = ({
   }, [setCameraX])
   
   return (
-    <Viewport 
-      worldWidth={worldWidth} 
-      worldHeight={worldHeight}
-      screenWidth={screenWidth}
-      screenHeight={screenHeight}
+    <Viewport
+      {...props}
       drag
       pinch
       wheel
@@ -51,9 +42,7 @@ const PlatformerViewport = ({
         maxScale: 5
       }}
       ref={viewportRef}
-    >
-      {children}
-    </Viewport>
+    />
   )
 }
 

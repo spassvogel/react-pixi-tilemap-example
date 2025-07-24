@@ -296,15 +296,15 @@
   "size": { "w": 2232, "h": 54 },
   "scale": "1",
   "frameTags": [
-   { "name": "Stand", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
-   { "name": "Idle", "from": 1, "to": 6, "direction": "forward", "color": "#000000ff" },
-   { "name": "run", "from": 7, "to": 20, "direction": "forward", "color": "#000000ff" },
-   { "name": "Shoot", "from": 21, "to": 23, "direction": "forward", "color": "#000000ff" },
-   { "name": "Crouch", "from": 24, "to": 26, "direction": "forward", "color": "#000000ff" },
+   { "name": "stand", "from": 0, "to": 0, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle", "from": 1, "to": 6, "direction": "forward", "color": "#000000ff" },
+   { "name": "run", "from": 7, "to": 20, "direction": "forward", "repeat": "3", "color": "#000000ff" },
+   { "name": "shoot", "from": 21, "to": 23, "direction": "forward", "color": "#000000ff" },
+   { "name": "crouch", "from": 24, "to": 26, "direction": "forward", "color": "#000000ff" },
    { "name": "crouch-shoot", "from": 27, "to": 29, "direction": "forward", "color": "#000000ff" },
-   { "name": "Jump", "from": 30, "to": 31, "direction": "forward", "color": "#000000ff" },
-   { "name": "Fall", "from": 32, "to": 33, "direction": "forward", "color": "#000000ff" },
-   { "name": "Hurt", "from": 34, "to": 35, "direction": "forward", "color": "#000000ff" }
+   { "name": "jump", "from": 30, "to": 31, "direction": "forward", "repeat": "1", "color": "#000000ff" },
+   { "name": "fall", "from": 32, "to": 33, "direction": "forward", "color": "#000000ff" },
+   { "name": "hurt", "from": 34, "to": 35, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
    { "name": "Cape", "opacity": 255, "blendMode": "normal" },

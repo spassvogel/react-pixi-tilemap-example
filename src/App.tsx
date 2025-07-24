@@ -1,11 +1,12 @@
 import { Application, extend } from '@pixi/react'
 import PixiDevToolsConnector from './components/pixi/PixiDevToolsConnector'
-import { Graphics } from 'pixi.js'
-import TiledTilemap from './components/tiled/TiledTilemap'
+import { extensions, Graphics, TextureSource, type ExtensionFormatLoose } from 'pixi.js'
 import PlatformerViewport from './components/app/PlatformerViewport'
+import { LevelContextProvider } from './components/providers/LevelContextProvider'
+import PlatformerTilemap from './components/app/PlatformerTilemap'
 
 import './App.css'
-import { LevelContextProvider } from './components/providers/LevelContextProvider'
+import { asepriteLoader } from './plugins/AsespriteLoader'
 
 extend({
   Graphics,
@@ -15,7 +16,13 @@ const worldWidth = 64 * 16
 const worldHeight = 11 * 16
 const viewportWidth = 16 * 16
 const viewportHeight = 11 * 16
+const BLOWUP_FACTOR = 2
 
+const EXTENSIONS: ExtensionFormatLoose[] = [
+  // asepriteLoader
+]
+extensions.add(asepriteLoader)
+TextureSource.defaultOptions.scaleMode = 'linear';
 
 function App() {
 
@@ -32,22 +39,17 @@ function App() {
 
 
   return (
-    <Application width={viewportWidth} height={viewportHeight}>
+    <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
       {import.meta.env.DEV && <PixiDevToolsConnector />}
       <LevelContextProvider>
         <PlatformerViewport
           worldWidth={worldWidth} 
           worldHeight={worldHeight}
-          screenWidth={viewportWidth}
-          screenHeight={viewportHeight}
+          screenWidth={viewportWidth * BLOWUP_FACTOR}
+          screenHeight={viewportHeight * BLOWUP_FACTOR}
+          scale={BLOWUP_FACTOR}
         >
-          <TiledTilemap
-            width={worldWidth}
-            basePath="/environment/gothic/" 
-            tilesetBasePath="/environment/gothic/tilesets"
-            imageBasePath="/environment/gothic/"
-            fileName='gothic-level1.json' 
-          />
+          <PlatformerTilemap worldWidth={worldWidth} />
         </PlatformerViewport>
       </LevelContextProvider>
     </Application>

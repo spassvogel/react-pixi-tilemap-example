@@ -7,7 +7,9 @@ import useLevelContext from "../../hooks/useLevelContext"
 
 type Props = Omit<ComponentProps<typeof TilingSprite>, 'src'> & {
   imageBasePath: string
-  layerData: Extract<TiledLayerData, { type: typeof TiledLayerType.imagelayer }>
+  layerData: Extract<TiledLayerData, { 
+    type: typeof TiledLayerType.imagelayer 
+  }>
 }
 
 // Todo: wrap in TiledImageLayer component

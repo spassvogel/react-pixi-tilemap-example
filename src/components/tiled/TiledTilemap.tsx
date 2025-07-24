@@ -1,7 +1,7 @@
 import { Container } from "pixi.js"
 import { useMemo, type PropsWithChildren } from "react"
 import useLoadTilesets from "../../hooks/useLoadTilesets"
-import { extend, useApplication } from "@pixi/react"
+import { extend } from "@pixi/react"
 import TiledTileLayer from "./TiledTileLayer"
 import useLoadMapData from "../../hooks/useLoadMapData"
 import ObjectGroupLayer from "./ObjectGroupLayer"
@@ -18,7 +18,6 @@ type Props = PropsWithChildren<{
 extend({
   Container, Text
 })
-
 
 const TiledTilemap = ({ 
   fileName,
@@ -51,6 +50,7 @@ const TiledTilemap = ({
           )
         }
         case 'imagelayer': {
+          // todo: only backgroundimagelayer when repeat!
           return (
             <BackgroundImageLayer
               imageBasePath={imageBasePath}

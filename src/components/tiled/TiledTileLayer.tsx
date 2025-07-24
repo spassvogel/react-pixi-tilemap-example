@@ -14,7 +14,6 @@ type Props = {
   animationInterval?: number
 }
 
-
 const TiledTileLayer = ({ 
   layerIndex, 
   tilesetTextures, 

@@ -1,8 +1,8 @@
 import { useTick, type PixiElements } from '@pixi/react'
 import { AnimatedSprite, Assets } from 'pixi.js'
-import * as React from 'react'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import type { AsepriteAsset } from '../../plugins/AsespriteLoader'
+import { useLevelStore } from '../store/level'
 
 type PlayerAnimations = 'stand' | 'idle' | 'run' | 'shoot' | 'crouch' | 'crouch-shoot' | 'jump' | 'fall' | 'hurt'
 
@@ -11,10 +11,11 @@ type Props = Omit<PixiElements['pixiAnimatedSprite'], 'textures'>
 const PlayerSprite = (props: Props) => {
   // const { cameraX } = useLevelContext()
 
-  const [spritesheet, setSpritesheet] = React.useState<AsepriteAsset<PlayerAnimations>>()
-  const ref = React.useRef<AnimatedSprite>(null)
-  const [currentAnim, setCurrentAnim] = React.useState<PlayerAnimations>('shoot')
-
+  const [spritesheet, setSpritesheet] = useState<AsepriteAsset<PlayerAnimations>>()
+  const ref = useRef<AnimatedSprite>(null)
+  const [currentAnim, setCurrentAnim] = useState<PlayerAnimations>('shoot')
+  const { playerPosition } = useLevelStore()
+console.log(`(wouter left this in) (plaeyrPosition)`, (playerPosition));
   useEffect(() => {
     Assets.load<AsepriteAsset<PlayerAnimations>>({
       src: `/characters/player/player.aseprite.json`,
@@ -50,6 +51,8 @@ const PlayerSprite = (props: Props) => {
   return (
     <pixiAnimatedSprite
       {...props}
+      x={playerPosition.x}
+      y={playerPosition.y}
       label={'player'}
       textures={frames}
       interactive

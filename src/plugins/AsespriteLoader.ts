@@ -41,7 +41,7 @@ const parseAsepriteData = (asepriteData: aseprite.SpriteSheet, baseTexture: Text
   // Parse frame tags (animations)
   if (meta.frameTags) {
     meta.frameTags.forEach((tag) => {
-      const animationFrames: AnimationFrame[] = []
+      const animationFrames: FrameObject[] = []
       
       for (let i = tag.from; i <= tag.to; i++) {
         const frameName = Object.keys(frames)[i]

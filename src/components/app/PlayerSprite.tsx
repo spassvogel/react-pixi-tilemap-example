@@ -13,7 +13,7 @@ const PlayerSprite = (props: Props) => {
 
   const [spritesheet, setSpritesheet] = useState<AsepriteAsset<PlayerAnimations>>()
   const ref = useRef<AnimatedSprite>(null)
-  const [currentAnim, setCurrentAnim] = useState<PlayerAnimations>('shoot')
+  const [currentAnim, setCurrentAnim] = useState<PlayerAnimations>('run')
   const { playerPosition } = useLevelStore()
 console.log(`(wouter left this in) (plaeyrPosition)`, (playerPosition));
   useEffect(() => {
@@ -59,7 +59,7 @@ console.log(`(wouter left this in) (plaeyrPosition)`, (playerPosition));
       onClick={handleClick} 
       ref={ref} 
       // todo: make animationspeed a function of velocity, once physics is in place
-      animationSpeed={frames.length / 40}      
+      animationSpeed={0.2}      
       autoUpdate 
       autoPlay 
       pivot={{ x: 0, y: 54 } }

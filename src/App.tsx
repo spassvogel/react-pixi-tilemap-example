@@ -4,6 +4,7 @@ import { extensions, Graphics, TextureSource, type ExtensionFormatLoose } from '
 import PlatformerViewport from './components/app/PlatformerViewport'
 import PlatformerTilemap from './components/app/PlatformerTilemap'
 import { asespriteLoader } from './plugins/AsespriteLoader'
+import InputManager from './components/app/input/InputManager'
 
 import './App.css'
 
@@ -39,19 +40,22 @@ function App() {
 
 
   return (
-    <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
-      {import.meta.env.DEV && <PixiDevToolsConnector />}
-      <pixiContainer scale={BLOWUP_FACTOR} y={-viewportHeight} label="container">
-        <PlatformerViewport
-          worldWidth={worldWidth} 
-          worldHeight={worldHeight}
-          screenWidth={viewportWidth * BLOWUP_FACTOR}
-          screenHeight={viewportHeight * BLOWUP_FACTOR}            
-        >
-          <PlatformerTilemap worldWidth={worldWidth} />
-        </PlatformerViewport>
-      </pixiContainer>
-    </Application>
+    <>
+      <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
+        {import.meta.env.DEV && <PixiDevToolsConnector />}
+        <pixiContainer scale={BLOWUP_FACTOR} y={-viewportHeight} label="container">
+          <PlatformerViewport
+            worldWidth={worldWidth} 
+            worldHeight={worldHeight}
+            screenWidth={viewportWidth * BLOWUP_FACTOR}
+            screenHeight={viewportHeight * BLOWUP_FACTOR}            
+          >
+            <PlatformerTilemap worldWidth={worldWidth} />
+          </PlatformerViewport>
+        </pixiContainer>
+      </Application>
+      <InputManager />
+    </>
   )
 }
 

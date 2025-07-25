@@ -2,7 +2,6 @@ import { Application, extend } from '@pixi/react'
 import PixiDevToolsConnector from './components/pixi/PixiDevToolsConnector'
 import { extensions, Graphics, TextureSource, type ExtensionFormatLoose } from 'pixi.js'
 import PlatformerViewport from './components/app/PlatformerViewport'
-import { LevelContextProvider } from './components/providers/LevelContextProvider'
 import PlatformerTilemap from './components/app/PlatformerTilemap'
 import { asespriteLoader } from './plugins/AsespriteLoader'
 
@@ -43,16 +42,14 @@ function App() {
     <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
       {import.meta.env.DEV && <PixiDevToolsConnector />}
       <pixiContainer scale={BLOWUP_FACTOR} y={-viewportHeight} label="container">
-        <LevelContextProvider>
-          <PlatformerViewport
-            worldWidth={worldWidth} 
-            worldHeight={worldHeight}
-            screenWidth={viewportWidth * BLOWUP_FACTOR}
-            screenHeight={viewportHeight * BLOWUP_FACTOR}            
-          >
-            <PlatformerTilemap worldWidth={worldWidth} />
-          </PlatformerViewport>
-        </LevelContextProvider>
+        <PlatformerViewport
+          worldWidth={worldWidth} 
+          worldHeight={worldHeight}
+          screenWidth={viewportWidth * BLOWUP_FACTOR}
+          screenHeight={viewportHeight * BLOWUP_FACTOR}            
+        >
+          <PlatformerTilemap worldWidth={worldWidth} />
+        </PlatformerViewport>
       </pixiContainer>
     </Application>
   )

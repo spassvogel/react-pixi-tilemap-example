@@ -2,7 +2,6 @@ import { useTick, type PixiElements } from '@pixi/react'
 import { AnimatedSprite, Assets } from 'pixi.js'
 import * as React from 'react'
 import { useEffect, useMemo } from 'react'
-// import useLevelContext from '../../hooks/useLevelContext'
 import type { AsepriteAsset } from '../../plugins/AsespriteLoader'
 
 type PlayerAnimations = 'stand' | 'idle' | 'run' | 'shoot' | 'crouch' | 'crouch-shoot' | 'jump' | 'fall' | 'hurt'

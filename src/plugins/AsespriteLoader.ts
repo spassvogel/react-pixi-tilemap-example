@@ -1,4 +1,4 @@
-import { AnimatedSprite, Assets, extensions, ExtensionType, Rectangle, Texture, type ExtensionMetadataDetails, type FrameObject } from 'pixi.js'
+import { AnimatedSprite, Assets, ExtensionType, Rectangle, Texture, type ExtensionMetadataDetails, type FrameObject } from 'pixi.js'
 import * as aseprite from "@kayahr/aseprite";
 
 /**
@@ -215,23 +215,6 @@ export const asespriteLoader = {
     return parseAsepriteData(asepriteData, texture)
   }
 }
-
-
-/**
- * Initialize the Aseprite loader with PixiJS Assets system
- */
-export function initAsepriteLoader(): void {
-  // Add the loader to PixiJS extensions
-  
-    
-  // Debug: Log that the extension was added
-  console.log('Aseprite loader extension added')
-  console.log('Registered extensions:', extensions)
-  
-}
-
-// Auto-initialize when module is imported
-// initAsepriteLoader()
 
 /* 
 USAGE EXAMPLES WITH TYPESCRIPT:

@@ -2,7 +2,7 @@ import { useEffect, useRef, type ComponentProps, type PropsWithChildren } from "
 import Viewport from "../pixi/Viewport"
 import { type Viewport as PixiViewport } from "pixi-viewport"
 import type { MovedEvent } from "pixi-viewport/dist/types"
-import useLevelContext from "../../hooks/useLevelContext"
+import { useLevelStore } from "../store/level"
 
 type Props = PropsWithChildren<{
   worldWidth: number 
@@ -14,7 +14,7 @@ type Props = PropsWithChildren<{
 const PlatformerViewport = (props: Props) => {
 
   const viewportRef = useRef<PixiViewport>(null)
-  const { setCameraX } = useLevelContext()
+  const { setCameraX } = useLevelStore()
 
   useEffect(() => {
     const viewportCurrent = viewportRef.current

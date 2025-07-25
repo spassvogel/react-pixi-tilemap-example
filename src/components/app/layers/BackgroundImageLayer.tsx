@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import TilingSprite from "../../pixi/TilingSprite"
 import { TiledLayerType, type TiledLayerData } from "../../../types/tiledMapData"
 import { useApplication } from "@pixi/react"
-import useLevelContext from "../../../hooks/useLevelContext"
+import { useLevelStore } from "../../store/level"
 
 
 type Props = Omit<ComponentProps<typeof TilingSprite>, 'src'> & {
@@ -15,7 +15,7 @@ type Props = Omit<ComponentProps<typeof TilingSprite>, 'src'> & {
 /** Uses camera X to handle parallax */
 const BackgroundImageLayer = ({ imageBasePath, layerData, width = 0 }: Props) => {
   const { app } = useApplication()
-  const { cameraX } = useLevelContext()
+  const { cameraX } = useLevelStore()
 
   if (!width) {
     console.warn(`Warning, no 'width' set on layer ${layerData.name}`)

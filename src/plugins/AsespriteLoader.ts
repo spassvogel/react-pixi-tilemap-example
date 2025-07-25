@@ -1,29 +1,20 @@
-import { AnimatedSprite, Assets, extensions, ExtensionType, Rectangle, Texture, type ExtensionFormat, type ExtensionMetadataDetails } from 'pixi.js'
+import { AnimatedSprite, Assets, extensions, ExtensionType, Rectangle, Texture, type ExtensionMetadataDetails, type FrameObject } from 'pixi.js'
 import * as aseprite from "@kayahr/aseprite";
-
-/**
- * Animation frame with texture and timing info
- */
-export interface AnimationFrame {
-  texture: Texture
-  time: number
-}
 
 /**
  * Animation data structure
  */
 export interface Animation {
-  frames: AnimationFrame[]
+  frames: FrameObject[]
   loop: boolean
   direction: 'forward' | 'reverse' | 'pingpong'
 }
 
 
-
  /**
    * Parse Aseprite JSON data and convert to PixiJS format
    */
-const parseAsepriteData = (asepriteData: aseprite.SpriteSheet, baseTexture: PIXI.Texture): AsepriteAsset => {
+const parseAsepriteData = (asepriteData: aseprite.SpriteSheet, baseTexture: Texture): AsepriteAsset => {
   const { frames, meta } = asepriteData
   const animations: Record<string, Animation> = {}
   const textures: Record<string, Texture> = {}
@@ -72,7 +63,7 @@ const parseAsepriteData = (asepriteData: aseprite.SpriteSheet, baseTexture: PIXI
 
   // Fallback: create default animation from all frames
   if (Object.keys(animations).length === 0) {
-    const allFrames: AnimationFrame[] = Object.entries(frames).map(([frameName, frameData]) => ({
+    const allFrames: FrameObject[] = Object.entries(frames).map(([frameName, frameData]) => ({
       texture: textures[frameName],
       time: frameData.duration || 100
     }))
@@ -91,9 +82,9 @@ const parseAsepriteData = (asepriteData: aseprite.SpriteSheet, baseTexture: PIXI
 /**
  * Asset wrapper class with convenience methods
  */
-export class AsepriteAsset {
+export class AsepriteAsset<TAnimationNames extends string = string> {
   public readonly textures: Record<string, Texture>
-  public readonly animations: Record<string, Animation>
+  public readonly animations: Record<TAnimationNames, Animation>
   public readonly meta: aseprite.Meta
   
   constructor(
@@ -109,21 +100,21 @@ export class AsepriteAsset {
   /**
    * Get list of available animation names
    */
-  getAnimationNames(): string[] {
-    return Object.keys(this.animations)
+  getAnimationNames(): TAnimationNames[] {
+    return Object.keys(this.animations) as TAnimationNames[]
   }
 
   /**
    * Check if an animation exists
    */
-  hasAnimation(animationName: string): boolean {
+  hasAnimation(animationName: TAnimationNames): boolean {
     return animationName in this.animations
   }
 
   /**
    * Create an AnimatedSprite for a specific animation
    */
-  createAnimatedSprite(animationName: string = 'default'): AnimatedSprite {
+  createAnimatedSprite(animationName: TAnimationNames): AnimatedSprite {
     const animation = this.animations[animationName]
     
     if (!animation) {
@@ -158,7 +149,7 @@ export class AsepriteAsset {
   /**
    * Get all textures for an animation
    */
-  getAnimationTextures(animationName: string = 'default'): Texture[] {
+  getAnimationTextures(animationName: TAnimationNames): Texture[] {
     const animation = this.animations[animationName]
     return animation ? animation.frames.map(frame => frame.texture) : []
   }
@@ -166,14 +157,14 @@ export class AsepriteAsset {
   /**
    * Get animation info without creating a sprite
    */
-  getAnimationInfo(animationName: string): Animation | undefined {
+  getAnimationInfo(animationName: TAnimationNames): Animation | undefined {
     return this.animations[animationName]
   }
 
   /**
    * Get total duration of an animation in milliseconds
    */
-  getAnimationDuration(animationName: string): number {
+  getAnimationDuration(animationName: TAnimationNames): number {
     const animation = this.animations[animationName]
     if (!animation) return 0
     
@@ -183,7 +174,7 @@ export class AsepriteAsset {
   /**
    * Get frame count for an animation
    */
-  getAnimationFrameCount(animationName: string): number {
+  getAnimationFrameCount(animationName: TAnimationNames): number {
     const animation = this.animations[animationName]
     return animation ? animation.frames.length : 0
   }
@@ -195,7 +186,7 @@ const extension: ExtensionMetadataDetails = {
   priority: 100, // Optional priority for ordering
 }
 
-export const asepriteLoader = {
+export const asespriteLoader = {
   extension,
 
   /**
@@ -206,19 +197,17 @@ export const asepriteLoader = {
   },
 
   async load (url: string) {
-    console.log('hello', url)
     // Load the JSON data
     const response = await fetch(url)
     if (!response.ok) {
       throw new Error(`Failed to load Aseprite JSON: ${response.statusText}`)
     }
     const asepriteData: aseprite.SpriteSheet = await response.json()
-    console.log('hi', asepriteData)
 
+  
     // Determine texture URL (assume same directory, same name but .png)
     const textureUrl = url.replace(/[^/]+\.aseprite\.json$/, asepriteData.meta.image)
-    console.log(textureUrl)
-
+  
     // Load the texture
     const texture = await Assets.load<Texture>(textureUrl)
 

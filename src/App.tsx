@@ -4,9 +4,9 @@ import { extensions, Graphics, TextureSource, type ExtensionFormatLoose } from '
 import PlatformerViewport from './components/app/PlatformerViewport'
 import { LevelContextProvider } from './components/providers/LevelContextProvider'
 import PlatformerTilemap from './components/app/PlatformerTilemap'
+import { asespriteLoader } from './plugins/AsespriteLoader'
 
 import './App.css'
-import { asepriteLoader } from './plugins/AsespriteLoader'
 
 extend({
   Graphics,
@@ -14,14 +14,15 @@ extend({
 
 const worldWidth = 64 * 16
 const worldHeight = 11 * 16
+
 const viewportWidth = 16 * 16
 const viewportHeight = 11 * 16
 const BLOWUP_FACTOR = 2
 
 const EXTENSIONS: ExtensionFormatLoose[] = [
-  // asepriteLoader
+  // asespriteLoader
 ]
-extensions.add(asepriteLoader)
+extensions.add(asespriteLoader)
 TextureSource.defaultOptions.scaleMode = 'linear';
 
 function App() {
@@ -41,17 +42,18 @@ function App() {
   return (
     <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
       {import.meta.env.DEV && <PixiDevToolsConnector />}
-      <LevelContextProvider>
-        <PlatformerViewport
-          worldWidth={worldWidth} 
-          worldHeight={worldHeight}
-          screenWidth={viewportWidth * BLOWUP_FACTOR}
-          screenHeight={viewportHeight * BLOWUP_FACTOR}
-          scale={BLOWUP_FACTOR}
-        >
-          <PlatformerTilemap worldWidth={worldWidth} />
-        </PlatformerViewport>
-      </LevelContextProvider>
+      <pixiContainer scale={BLOWUP_FACTOR} y={-viewportHeight} label="container">
+        <LevelContextProvider>
+          <PlatformerViewport
+            worldWidth={worldWidth} 
+            worldHeight={worldHeight}
+            screenWidth={viewportWidth * BLOWUP_FACTOR}
+            screenHeight={viewportHeight * BLOWUP_FACTOR}            
+          >
+            <PlatformerTilemap worldWidth={worldWidth} />
+          </PlatformerViewport>
+        </LevelContextProvider>
+      </pixiContainer>
     </Application>
   )
 }

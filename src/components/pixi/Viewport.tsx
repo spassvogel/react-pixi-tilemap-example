@@ -10,7 +10,7 @@ import { type IClampOptions,
   Viewport as PixiViewport 
 } from "pixi-viewport"
 import { extend, useApplication, type PixiElements, type PixiReactElementProps } from "@pixi/react"
-import type { MovedEvent, DragEvent, ZoomedEvent } from "pixi-viewport/dist/types"
+import type { MovedEvent, DragEvent, ZoomedEvent, ClickedEvent } from "pixi-viewport/dist/types"
 
 type CustomViewportOptions = IViewportOptions & {
   decelerate?: true | IDecelerateOptions
@@ -24,7 +24,7 @@ type CustomViewportOptions = IViewportOptions & {
   onBounceXstart?: (vp: PixiViewport) => void
   onBounceYend?: (vp: PixiViewport) => void
   onBounceYstart?: (vp: PixiViewport) => void
-  onClicked?: (e: DragEvent) => void
+  onClicked?: (e: ClickedEvent) => void
   onDragEnd?: (e: DragEvent) => void
   onDragStart?: (e: DragEvent) => void
   onFrameEnd?: (vp: PixiViewport) => void

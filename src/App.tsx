@@ -29,7 +29,7 @@ function App() {
   // Load map. Available maps: 
   // - `gothic-level1.json`
   // - `gothic-level2.json`
-  const mapData = useLoadMapData(BASE_PATH, 'gothic-level2.json' )
+  const mapData = useLoadMapData(BASE_PATH, 'gothic-level1.json' )
   const { setMapData } = useLevelStore()
 
   useEffect(() => {

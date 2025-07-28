@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import TilingSprite from "../../pixi/TilingSprite"
 import { TiledLayerType, type TiledLayerData } from "../../../types/tiledMapData"
 import { useApplication } from "@pixi/react"
-import { useLevelStore } from "../../store/level"
+import { selectors, useLevelStore } from "../../store/level"
 
 
 type Props = Omit<ComponentProps<typeof TilingSprite>, 'src'> & {
@@ -16,16 +16,14 @@ type Props = Omit<ComponentProps<typeof TilingSprite>, 'src'> & {
 const BackgroundImageLayer = ({ imageBasePath, layerData, width = 0 }: Props) => {
   const { app } = useApplication()
   const { cameraX } = useLevelStore()
+  const worldWidth = useLevelStore(selectors.worldWidth) ?? 0
 
-  if (!width) {
-    console.warn(`Warning, no 'width' set on layer ${layerData.name}`)
-  }
 
   const tilePosX = -cameraX * (layerData.parallaxx ?? 1)
   return (
     <TilingSprite
       height={app.renderer.height}
-      width={width}
+      width={width ?? worldWidth}
       src={`${imageBasePath}${layerData.image}`}
       label={layerData.name}
       alpha={layerData.opacity}

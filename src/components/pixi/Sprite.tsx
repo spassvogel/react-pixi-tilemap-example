@@ -10,6 +10,7 @@ type Props = PixiElements['pixiSprite'] & {
   src: string
 }
 
+/** A pixi sprite that has a `src` prop for the texture path */
 const CustomSprite = (props: Props) => {
   const [texture, setTexture] = useState(Texture.EMPTY)
 

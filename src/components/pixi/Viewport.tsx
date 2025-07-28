@@ -81,6 +81,10 @@ type Props = PropsWithChildren<Omit<CustomViewportOptions & PixiElements['pixiCo
 const Viewport = forwardRef<PixiViewport, Props>(({ children, ...restProps }, ref) => {
   const { app } = useApplication()
 
+  if (!app.renderer?.events) {
+    return null
+  }
+
   return (
     <pixiCustomViewport {...restProps} events={app.renderer?.events} ref={ref}>
       {children}

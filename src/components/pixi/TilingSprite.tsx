@@ -10,6 +10,7 @@ type Props = PixiElements['pixiTilingSprite'] & {
   src: string
 }
 
+/** A pixi tiling sprite that has a `src` prop for the texture path */
 const CustomTilingSprite = (props: Props) => {
   const [texture, setTexture] = useState(Texture.EMPTY)
 

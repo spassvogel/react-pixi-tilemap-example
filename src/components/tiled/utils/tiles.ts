@@ -1,4 +1,4 @@
-import { TiledLayerType, type TiledLayerData, type TiledTilesetData } from "../../../types/tiledMapData"
+import type { TiledLayerType, TiledLayerData, TiledTilesetData } from "../../../types/tiledMapData"
 import { Buffer } from 'buffer'
 import pako from 'pako'
 

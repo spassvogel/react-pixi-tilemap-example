@@ -1,15 +1,14 @@
 import { Application, extend } from '@pixi/react'
 import PixiDevToolsConnector from './components/pixi/PixiDevToolsConnector'
-import { extensions, Graphics, TextureSource, type ExtensionFormatLoose } from 'pixi.js'
+import { Graphics, TextureSource } from 'pixi.js'
 import PlatformerViewport from './components/app/PlatformerViewport'
 import PlatformerTilemap from './components/app/PlatformerTilemap'
-import { asespriteLoader } from './plugins/AsespriteLoader'
-import InputManager from './components/app/input/InputManager'
 
-import './App.css'
 import { useLevelStore } from './components/store/level'
 import useLoadMapData from './hooks/useLoadMapData'
 import { useEffect } from 'react'
+
+import './App.css'
 
 extend({
   Graphics,
@@ -18,36 +17,20 @@ extend({
 
 const viewportWidth = 16 * 16
 const viewportHeight = 11 * 16
-const BLOWUP_FACTOR = 2 
 
-const EXTENSIONS: ExtensionFormatLoose[] = [
-  // asespriteLoader
-]
-extensions.add(asespriteLoader)
 TextureSource.defaultOptions.scaleMode = 'linear'
-
 
 const BASE_PATH = "/environment/gothic/"
 export const TILESET_BASE_PATH = "/environment/gothic/tilesets"
 export const IMAGE_BASE_PATH = "/environment/gothic/"
-const MAP = 'gothic-level1.json' 
-
 
 function App() {
 
-  // return (
-  //   <Application width={64 * 32} height={16 * 32}>
-  //     <PixiDevToolsConnector />
-  //     <TiledTilemap 
-  //       basePath="./village/" 
-  //       textureBasePath="./village/tilesets" 
-  //       fileName='level1.json' 
-  //     />
-  //   </Application>
-  // )
-
-  const {  setMapData } = useLevelStore()
-  const mapData = useLoadMapData(BASE_PATH, MAP)
+  // Load map. Available maps: 
+  // - `gothic-level1.json`
+  // - `gothic-level2.json`
+  const mapData = useLoadMapData(BASE_PATH, 'gothic-level2.json' )
+  const { setMapData } = useLevelStore()
 
   useEffect(() => {
     if (mapData) {
@@ -61,18 +44,17 @@ function App() {
   }
   return (
     <>
-      <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
+      <Application width={viewportWidth} height={viewportHeight}>
         {import.meta.env.DEV && <PixiDevToolsConnector />}
-        <pixiContainer scale={BLOWUP_FACTOR} y={viewportHeight + -BLOWUP_FACTOR * viewportHeight} label="Application">
+        <pixiContainer label="Application">
           <PlatformerViewport
-            screenWidth={viewportWidth * BLOWUP_FACTOR}
-            screenHeight={viewportHeight * BLOWUP_FACTOR}            
+            screenWidth={viewportHeight}
+            screenHeight={viewportHeight}            
           >
             <PlatformerTilemap />
           </PlatformerViewport>
         </pixiContainer>
       </Application>
-      <InputManager />
     </>
   )
 }

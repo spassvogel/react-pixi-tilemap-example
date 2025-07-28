@@ -14,6 +14,7 @@ type Props = {
   animationInterval?: number
 }
 
+/** Corresponds to a tiled layer of type 'tilelayer' where tiles are placed 'in a grid' */
 const TiledTileLayer = ({ 
   layerIndex, 
   tilesetTextures, 
@@ -68,7 +69,7 @@ const TiledTileLayer = ({
           ...animOptions
         })
       } else {
-        console.warn('Could not find ' + `${tileset.name}-${tileId}`, tilesetTextures )
+        console.warn('Could not find tile named: ' + `${tileset.name}-${tileId}`, Object.entries(tilesetTextures).map((n) => n) )
       }
     })
 

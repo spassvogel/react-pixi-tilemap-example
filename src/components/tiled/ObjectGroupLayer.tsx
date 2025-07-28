@@ -14,6 +14,7 @@ type Props = {
   animationInterval?: number
 }
 
+/** Corresponds to a tiled layer of type 'objectgroup' where tiles can be placed 'free form' */
 const ObjectGroupLayer = ({ 
   layerIndex, 
   tilesetTextures, 

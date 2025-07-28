@@ -15,7 +15,7 @@ const PlayerSprite = (props: Props) => {
   const ref = useRef<AnimatedSprite>(null)
   const [currentAnim, setCurrentAnim] = useState<PlayerAnimations>('run')
   const { playerPosition } = useLevelStore()
-console.log(`(wouter left this in) (plaeyrPosition)`, (playerPosition));
+
   useEffect(() => {
     Assets.load<AsepriteAsset<PlayerAnimations>>({
       src: `/characters/player/player.aseprite.json`,

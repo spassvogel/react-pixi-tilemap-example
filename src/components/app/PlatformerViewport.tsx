@@ -2,11 +2,9 @@ import { useEffect, useRef, type ComponentProps, type PropsWithChildren } from "
 import Viewport from "../pixi/Viewport"
 import { type Viewport as PixiViewport } from "pixi-viewport"
 import type { MovedEvent } from "pixi-viewport/dist/types"
-import { useLevelStore } from "../store/level"
+import { selectors, useLevelStore } from "../store/level"
 
 type Props = PropsWithChildren<{
-  worldWidth: number 
-  worldHeight: number
   screenWidth: number
   screenHeight: number
 }> & ComponentProps<typeof Viewport>
@@ -29,10 +27,19 @@ const PlatformerViewport = (props: Props) => {
       viewportCurrent?.off('moved', onMoved)
     }
   }, [setCameraX])
-  
+
+  const worldWidth = useLevelStore(selectors.worldWidth)
+  const worldHeight = useLevelStore(selectors.worldHeight)
+
+  if (!worldWidth || !worldHeight) {
+    return null
+  }
+
   return (
     <Viewport
       {...props}
+      worldWidth={worldWidth}
+      worldHeight={worldHeight}
       drag
       pinch
       wheel

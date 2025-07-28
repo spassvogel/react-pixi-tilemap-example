@@ -1,5 +1,5 @@
 import { forwardRef, type PropsWithChildren } from "react"
-import { Container, Graphics, Sprite, Text } from "pixi.js"
+import { Container } from "pixi.js"
 import { type IClampOptions, 
   type IClampZoomOptions, 
   type IDecelerateOptions, 
@@ -23,6 +23,7 @@ type CustomViewportOptions = IViewportOptions & {
 class CustomViewport extends PixiViewport {
   constructor(options: CustomViewportOptions) {
     const { decelerate, drag, pinch, wheel, clamp, clampZoom, ...rest } = options ?? {}
+
     super(rest)
 
     // Can either pass `true` for these or specific props to control behaviour
@@ -73,7 +74,7 @@ declare module "@pixi/react" {
   }
 }
 
-extend({ Container, Graphics, Sprite, Text, CustomViewport })
+extend({ Container, CustomViewport })
 
 type Props = PropsWithChildren<Omit<CustomViewportOptions & PixiElements['pixiContainer'], 'events'>>
 

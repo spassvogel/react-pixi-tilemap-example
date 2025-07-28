@@ -1,4 +1,3 @@
-import * as React from 'react'
 import { useEffect } from 'react'
 import { useLevelStore } from '../../store/level'
 
@@ -8,7 +7,6 @@ const InputManager = () => {
 
   useEffect(() => {
     const keyHandler = (e: KeyboardEvent) => {
-      console.log(`(wouter left this in) e.key`, e.key);
       switch (e.key) {
         case "ArrowLeft": {
           updatePlayerPosition({ x: -speed })

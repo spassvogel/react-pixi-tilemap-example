@@ -7,23 +7,31 @@ import { asespriteLoader } from './plugins/AsespriteLoader'
 import InputManager from './components/app/input/InputManager'
 
 import './App.css'
+import { useLevelStore } from './components/store/level'
+import useLoadMapData from './hooks/useLoadMapData'
+import { useEffect } from 'react'
 
 extend({
   Graphics,
 })
 
-const worldWidth = 64 * 16
-const worldHeight = 11 * 16
 
 const viewportWidth = 16 * 16
 const viewportHeight = 11 * 16
-const BLOWUP_FACTOR = 2
+const BLOWUP_FACTOR = 2 
 
 const EXTENSIONS: ExtensionFormatLoose[] = [
   // asespriteLoader
 ]
 extensions.add(asespriteLoader)
-TextureSource.defaultOptions.scaleMode = 'linear';
+TextureSource.defaultOptions.scaleMode = 'linear'
+
+
+const BASE_PATH = "/environment/gothic/"
+export const TILESET_BASE_PATH = "/environment/gothic/tilesets"
+export const IMAGE_BASE_PATH = "/environment/gothic/"
+const MAP = 'gothic-level1.json' 
+
 
 function App() {
 
@@ -38,19 +46,29 @@ function App() {
   //   </Application>
   // )
 
+  const {  setMapData } = useLevelStore()
+  const mapData = useLoadMapData(BASE_PATH, MAP)
 
+  useEffect(() => {
+    if (mapData) {
+      // Make map data available in global store
+      setMapData(mapData)
+    }
+  }, [mapData, setMapData])
+
+  if (!mapData) {
+    return null // todo: loading spinner?
+  }
   return (
     <>
       <Application width={viewportWidth * BLOWUP_FACTOR} height={viewportHeight * BLOWUP_FACTOR} extensions={EXTENSIONS}>
         {import.meta.env.DEV && <PixiDevToolsConnector />}
-        <pixiContainer scale={BLOWUP_FACTOR} y={-viewportHeight} label="container">
+        <pixiContainer scale={BLOWUP_FACTOR} y={viewportHeight + -BLOWUP_FACTOR * viewportHeight} label="Application">
           <PlatformerViewport
-            worldWidth={worldWidth} 
-            worldHeight={worldHeight}
             screenWidth={viewportWidth * BLOWUP_FACTOR}
             screenHeight={viewportHeight * BLOWUP_FACTOR}            
           >
-            <PlatformerTilemap worldWidth={worldWidth} />
+            <PlatformerTilemap />
           </PlatformerViewport>
         </pixiContainer>
       </Application>

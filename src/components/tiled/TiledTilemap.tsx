@@ -3,15 +3,12 @@ import { useMemo, type JSX, type PropsWithChildren, type ReactNode } from "react
 import useLoadTilesets from "../../hooks/useLoadTilesets"
 import { extend } from "@pixi/react"
 import TiledTileLayer from "./TiledTileLayer"
-import useLoadMapData from "../../hooks/useLoadMapData"
 import ObjectGroupLayer from "./ObjectGroupLayer"
 import BackgroundImageLayer from "../app/layers/BackgroundImageLayer"
+import { useLevelStore } from "../store/level"
+import { IMAGE_BASE_PATH, TILESET_BASE_PATH } from "../../App"
 
 type Props = PropsWithChildren<{
-  fileName: string
-  basePath?: string
-  tilesetBasePath?: string
-  imageBasePath?: string
   width?: number
 
   /** A render function for the different layers of this tilemap. This can be used to inject a 'layer' in a specific place 
@@ -25,17 +22,14 @@ extend({
 })
 
 const TiledTilemap = ({ 
-  fileName,
-  basePath = "./",
-  tilesetBasePath = "./",
-  imageBasePath = "./",
   renderLayers = (layers) => (layers),
   width,
   children
 }: Props) => {
-  const mapData = useLoadMapData(basePath, fileName)
-  const tilesetTextures = useLoadTilesets(mapData?.tilesets ?? [], tilesetBasePath)
+  const { mapData } = useLevelStore()
+  const tilesetTextures = useLoadTilesets(mapData?.tilesets ?? [], TILESET_BASE_PATH)
 
+  
   const layers = useMemo(() => {
     if (!mapData || !tilesetTextures) {
       return null
@@ -59,7 +53,7 @@ const TiledTilemap = ({
           // todo: only backgroundimagelayer when image repeats!
           return (
             <BackgroundImageLayer
-              imageBasePath={imageBasePath}
+              imageBasePath={IMAGE_BASE_PATH}
               width={width}
               key={l.name}
               layerData={l}
@@ -82,7 +76,7 @@ const TiledTilemap = ({
       }
     })
     
-  }, [imageBasePath, mapData, tilesetTextures, width])
+  }, [mapData, tilesetTextures, width])
 
   if (!tilesetTextures) {
     return null
@@ -90,8 +84,6 @@ const TiledTilemap = ({
 
   return (
     <pixiContainer label="TiledTilemap">
-
-      {/* <Sprite src="village/backgrounds/mist-forest/mist-forest-background-previewx2.png" /> */}
       {renderLayers(layers)}
       {children}
     </pixiContainer>

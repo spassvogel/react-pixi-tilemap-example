@@ -1,5 +1,5 @@
 import { forwardRef, type PropsWithChildren } from "react"
-import { Container } from "pixi.js"
+import { Container, FederatedWheelEvent } from "pixi.js"
 import { type IClampOptions, 
   type IClampZoomOptions, 
   type IDecelerateOptions, 
@@ -10,6 +10,7 @@ import { type IClampOptions,
   Viewport as PixiViewport 
 } from "pixi-viewport"
 import { extend, useApplication, type PixiElements, type PixiReactElementProps } from "@pixi/react"
+import type { MovedEvent, DragEvent, ZoomedEvent } from "pixi-viewport/dist/types"
 
 type CustomViewportOptions = IViewportOptions & {
   decelerate?: true | IDecelerateOptions
@@ -18,11 +19,64 @@ type CustomViewportOptions = IViewportOptions & {
   wheel?: true | IWheelOptions
   clamp?: true | IClampOptions
   clampZoom?: IClampZoomOptions
+
+  onBounceXend?: (vp: PixiViewport) => void
+  onBounceXstart?: (vp: PixiViewport) => void
+  onBounceYend?: (vp: PixiViewport) => void
+  onBounceYstart?: (vp: PixiViewport) => void
+  onClicked?: (e: DragEvent) => void
+  onDragEnd?: (e: DragEvent) => void
+  onDragStart?: (e: DragEvent) => void
+  onFrameEnd?: (vp: PixiViewport) => void
+  onMouseEdgeEnd?: (vp: PixiViewport) => void
+  onMouseEdgeStart?: (vp: PixiViewport) => void
+  onMoved?: (e: MovedEvent) => void
+  onMovedEnd?: (vp: PixiViewport) => void
+  onPinchEnd?: (vp: PixiViewport) => void
+  onPinchStart?: (vp: PixiViewport) => void
+  onSnapEnd?: (vp: PixiViewport) => void
+  onSnapStart?: (vp: PixiViewport) => void
+  onSnapZoomEnd?: (vp: PixiViewport) => void
+  onSnapZoomStart?: (vp: PixiViewport) => void
+  onWheel?: (fe: FederatedWheelEvent) => void
+  onWheelScroll?: (vp: PixiViewport) => void
+  onZoomed?: (e: ZoomedEvent) => void
+  onZoomedEnd?: (vp: PixiViewport) => void
 }
 
 class CustomViewport extends PixiViewport {
   constructor(options: CustomViewportOptions) {
-    const { decelerate, drag, pinch, wheel, clamp, clampZoom, ...rest } = options ?? {}
+    const { 
+      decelerate, 
+      drag, 
+      pinch, 
+      wheel, 
+      clamp, 
+      clampZoom,
+      onBounceXend,
+      onBounceXstart,
+      onBounceYend,
+      onBounceYstart,
+      onClicked,
+      onDragEnd,
+      onDragStart,
+      onFrameEnd,
+      onMouseEdgeEnd,
+      onMouseEdgeStart,
+      onMoved,
+      onMovedEnd,
+      onPinchEnd,
+      onPinchStart,
+      onSnapEnd,
+      onSnapStart,
+      onSnapZoomEnd,
+      onSnapZoomStart,
+      onWheel,
+      onWheelScroll,
+      onZoomed,
+      onZoomedEnd,
+      ...rest
+    } = options ?? {}
 
     super(rest)
 
@@ -64,6 +118,94 @@ class CustomViewport extends PixiViewport {
     }
     if (clampZoom) {
       this.clampZoom(clampZoom)
+    }
+
+    if (onBounceXend) {
+      this.on('bounce-x-end', onBounceXend)
+    }
+    
+    if (onBounceXstart) {
+      this.on('bounce-x-start', onBounceXstart)
+    }
+
+    if (onBounceYend) {
+      this.on('bounce-y-end', onBounceYend)
+    }
+    
+    if (onBounceYstart) {
+      this.on('bounce-y-start', onBounceYstart)
+    }
+
+    if (onClicked) {
+      this.on('clicked', onClicked)
+    }
+
+    if (onDragEnd) {
+      this.on('drag-end', onDragEnd)
+    }
+
+    if (onDragStart) {
+      this.on('drag-start', onDragStart)
+    }
+
+    if (onFrameEnd) {
+      this.on('frame-end', onFrameEnd)
+    }
+
+    if (onMouseEdgeEnd) {
+      this.on('mouse-edge-end', onMouseEdgeEnd)
+    }
+
+    if (onMouseEdgeStart) {
+      this.on('mouse-edge-start', onMouseEdgeStart)
+    }
+
+    if (onMoved) {
+      this.on('moved', onMoved)
+    }
+
+    if (onMovedEnd) {
+      this.on('moved-end', onMovedEnd)
+    }
+
+    if (onPinchEnd) {
+      this.on('pinch-end', onPinchEnd)
+    }    
+
+    if (onPinchStart) {
+      this.on('pinch-start', onPinchStart)
+    }
+
+    if (onSnapEnd) {
+      this.on('snap-end', onSnapEnd)
+    }
+    
+    if (onSnapStart) {
+      this.on('snap-start', onSnapStart)
+    }
+    
+    if (onSnapZoomEnd) {
+      this.on('snap-zoom-end', onSnapZoomEnd)
+    }
+    
+    if (onSnapZoomStart) {
+      this.on('snap-zoom-start', onSnapZoomStart)
+    }
+    
+    if (onWheel) {
+      this.on('wheel', onWheel)
+    }
+    
+    if (onWheelScroll) {
+      this.on('wheel-scroll', onWheelScroll)
+    }
+    
+    if (onZoomed) {
+      this.on('zoomed', onZoomed)
+    }
+
+    if (onZoomedEnd) {
+      this.on('zoomed-end', onZoomedEnd)
     }
   }
 }

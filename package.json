@@ -10,7 +10,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@dimforge/rapier2d": "^0.18.0",
     "@kayahr/aseprite": "^2.0.0",
     "@pixi/react": "^8.0.2",
     "@pixi/tilemap": "^5.0.2",

@@ -15,8 +15,9 @@ extend({
 })
 
 
-const viewportWidth = 16 * 16
-const viewportHeight = 11 * 16
+const VIEWPORT_WIDTH = 16 * 16
+const VIEWPORT_HEIGHT = 11 * 16
+const BLOWUP_FACTOR = 2
 
 TextureSource.defaultOptions.scaleMode = 'linear'
 
@@ -29,7 +30,7 @@ function App() {
   // Load map. Available maps: 
   // - `gothic-level1.json`
   // - `gothic-level2.json`
-  const mapData = useLoadMapData(BASE_PATH, 'gothic-level1.json' )
+  const mapData = useLoadMapData(BASE_PATH, 'gothic-level1.json')
   const { setMapData } = useLevelStore()
 
   useEffect(() => {
@@ -44,12 +45,12 @@ function App() {
   }
   return (
     <>
-      <Application width={viewportWidth} height={viewportHeight}>
+      <Application width={VIEWPORT_WIDTH * BLOWUP_FACTOR} height={VIEWPORT_HEIGHT * BLOWUP_FACTOR} >
         {import.meta.env.DEV && <PixiDevToolsConnector />}
-        <pixiContainer label="Application">
+        <pixiContainer label="Application" scale={BLOWUP_FACTOR}> 
           <PlatformerViewport
-            screenWidth={viewportHeight}
-            screenHeight={viewportHeight}            
+            screenWidth={VIEWPORT_HEIGHT}
+            screenHeight={VIEWPORT_HEIGHT}            
           >
             <PlatformerTilemap />
           </PlatformerViewport>

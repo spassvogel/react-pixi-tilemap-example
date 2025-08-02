@@ -1,0 +1,14 @@
+{ "columns":60,
+ "image":"gothic-church-tiles.png",
+ "imageheight":368,
+ "imagewidth":960,
+ "margin":0,
+ "name":"gothic-church-tiles",
+ "spacing":0,
+ "tilecount":1380,
+ "tiledversion":"1.11.2",
+ "tileheight":16,
+ "tilewidth":16,
+ "type":"tileset",
+ "version":"1.10"
+}

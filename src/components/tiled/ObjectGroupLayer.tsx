@@ -40,11 +40,15 @@ const ObjectGroupLayer = ({
     const data = layerData.objects
     data.map((object) => {
       const { gid, visible, x } = object
-      if (!visible) {
+      if (!visible || !gid) {
         return null
       }
 
       const actualGid = normalizeGid(gid)
+      if (actualGid === 0) {
+        console.log(actualGid)
+
+      }
       const tileset = findTileset(actualGid, mapData.tilesets)
       if (!tileset || gid === 0) return null
 

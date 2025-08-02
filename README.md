@@ -11,6 +11,10 @@ A simple example on how to load a [Tiled](https://www.mapeditor.org/) map into P
 - Uses [zustand](https://github.com/pmndrs/zustand) to store global vars (map data and camera position)
 - Full typescript support
 
+> [!NOTE]  
+> I wouldn't recommend making a platform game with react-pixi, it's probably not memory efficient enough.
+
+
 ## Credits
 
 Assets were taken from [Luis Zuno aka Ansimuz](https://ansimuz.itch.io).

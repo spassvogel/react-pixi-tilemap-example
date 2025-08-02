@@ -86,7 +86,7 @@ const TiledTileLayer = ({
     if (!currentRef) {
       return
     }
-    let interval: ReturnType<typeof setInterval> = -1
+    let interval: NodeJS.Timeout | undefined = undefined
    
     if (!hasAnimation) {
       clearInterval(interval)

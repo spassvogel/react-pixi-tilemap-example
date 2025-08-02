@@ -4,12 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite & echo hi",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "BASE_URL=react-pixi-tilemap-example/ npm run build",
-    "deploy": "gh-pages -d dist"
+    "predeploy": "BASE_URL=react-pixi-tilemap-example/ npm run build ",
+    "deploy": "gh-pages -d dist & echo See the site at https://spassvogel.github.io/react-pixi-tilemap-example/"
   },
   "dependencies": {
     "@kayahr/aseprite": "^2.0.0",

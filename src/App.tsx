@@ -23,7 +23,7 @@ TextureSource.defaultOptions.scaleMode = 'linear'
 
 const BASE_PATH = `${import.meta.env.BASE_URL}environment/gothic/`
 export const TILESET_BASE_PATH = `${import.meta.env.BASE_URL}environment/gothic/tilesets`
-export const IMAGE_BASE_PATH = "/environment/gothic/"
+export const IMAGE_BASE_PATH = `${import.meta.env.BASE_URL}environment/gothic/`
 
 function App() {
 

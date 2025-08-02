@@ -1,5 +1,5 @@
 {
-  "name": "forest-walker",
+  "name": "react-pixi-tilemap-example",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -8,7 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "predeploy": "npm run build",
+    "predeploy": "BASE_URL=react-pixi-tilemap-example/ npm run build",
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.30.1",
+    "@types/node": "^24.1.0",
     "@types/pako": "^2.0.3",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

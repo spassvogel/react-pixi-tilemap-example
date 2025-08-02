@@ -1,5 +1,7 @@
 # React Pixi tilemap example
 
+View at: https://spassvogel.github.io/react-pixi-tilemap-example/
+
 A simple example on how to load a [Tiled](https://www.mapeditor.org/) map into Pixi.js, using pixi-react.
 
 - Loads tiled map (only .json or .tjs)

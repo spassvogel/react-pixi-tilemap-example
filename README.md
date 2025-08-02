@@ -1,5 +1,7 @@
 # React Pixi tilemap example
 
+![](docs/image.png)
+
 View at: https://spassvogel.github.io/react-pixi-tilemap-example/
 
 A simple example on how to load a [Tiled](https://www.mapeditor.org/) map into Pixi.js, using pixi-react.
@@ -21,7 +23,4 @@ A simple example on how to load a [Tiled](https://www.mapeditor.org/) map into P
 
 Assets were taken from [Luis Zuno aka Ansimuz](https://ansimuz.itch.io).
 
-All assets included in this package are licensed under the [Creative Commons Zero (CC0)](https://creativecommons.org/public-domain/cc0/)
-license, which means you can use them freely in any project, whether personal or
-commercial, without the need for attribution. There are no restrictions on use,
-modification, or redistribution of these assets.
+All assets included in this package are licensed under the [Creative Commons Zero (CC0)](https://creativecommons.org/public-domain/cc0/) license, which means you can use them freely in any project, whether personal or commercial, without the need for attribution. There are no restrictions on use, modification, or redistribution of these assets.

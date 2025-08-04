@@ -12,6 +12,7 @@ A simple example on how to load a [Tiled](https://www.mapeditor.org/) map into P
 - Supports animated tiles. Create the [animation](https://doc.mapeditor.org/en/stable/manual/editing-tilesets/#tile-animation-editor) in Tiled. Note that for animations to work the frames need to be adjacent.
 - Works only with orthogonal maps for now
 - Supports (horizontal) parallax on image layers
+- The camera is implemented using [Pixi Viewport](https://github.com/pixijs-userland/pixi-viewport), you can drag to pan in order to view more of the scene.
 - Uses [zustand](https://github.com/pmndrs/zustand) to store global vars (map data and camera position)
 - Full typescript support
 
